@@ -6,7 +6,7 @@ import axios from "axios";
 
 interface EditPostPageProps {
   posts: IPost[];
-  fetchPosts: () => void;
+  fetchPosts: () => Promise<void>;
 }
 
 const EditPostPage: FC<EditPostPageProps> = (props) => {
@@ -24,7 +24,7 @@ const EditPostPage: FC<EditPostPageProps> = (props) => {
 
     try {
       await axios.put(`${import.meta.env.VITE_BASE_URL}/posts/${post.id}`, {...post, content});
-      fetchPosts();
+      await fetchPosts();
       navigate(-1)
     } catch (error) {
       console.error('Ошибка при редактировании поста:', error);

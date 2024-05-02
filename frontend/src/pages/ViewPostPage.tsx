@@ -7,7 +7,7 @@ import axios from "axios";
 
 interface EditPostPageProps {
   posts: IPost[];
-  fetchPosts: () => void;
+  fetchPosts: () => Promise<void>;
 }
 
 const ViewPostPage: React.FC<EditPostPageProps> = (props) => {
@@ -23,7 +23,7 @@ const ViewPostPage: React.FC<EditPostPageProps> = (props) => {
 	const handleDelete = async () => {
 		try {
 			await axios.delete(`${import.meta.env.VITE_BASE_URL}/posts/${id}`);
-			fetchPosts();
+			await fetchPosts();
 			navigate("/");
 		} catch (error) {
 			console.error("Ошибка при удалении поста:", error);

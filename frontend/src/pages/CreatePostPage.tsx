@@ -4,7 +4,7 @@ import NavTopPost from "../components/NavTopPost";
 import axios from "axios";
 
 interface CreatePostPage {
-	fetchPosts: () => void;
+	fetchPosts: () => Promise<void>;
 }
 
 const CreatePostPage: FC<CreatePostPage> = (props) => {
@@ -17,7 +17,7 @@ const CreatePostPage: FC<CreatePostPage> = (props) => {
 
 		try {
 			await axios.post(`${import.meta.env.VITE_BASE_URL}/posts`, { content });
-			fetchPosts();
+			await fetchPosts();
 			navigate("/");
 		} catch (error) {
 			console.error("Ошибка при создании поста:", error);
