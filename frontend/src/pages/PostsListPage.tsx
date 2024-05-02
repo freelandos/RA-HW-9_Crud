@@ -2,9 +2,13 @@ import { FC } from "react";
 import { Link } from "react-router-dom";
 import ViewPost from "../components/ViewPost";
 import CommentInput from "../components/CommentInput";
-import { MainProps } from "../models";
+import { IPost } from "../models";
 
-const PostsListPage: FC<MainProps> = (props) => {
+interface PostsListPageProps {
+	posts: IPost[];
+}
+
+const PostsListPage: FC<PostsListPageProps> = (props) => {
 	const { posts } = props;
 	const sortedPosts = posts.sort((a, b) => b.created - a.created);
 

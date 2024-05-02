@@ -1,12 +1,17 @@
 import { FC, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import ButtonX from "../components/ButtonX";
-import { MainProps } from "../models";
+import { IPost } from "../models";
 import axios from "axios";
 
-const EditPostPage: FC<MainProps> = (props) => {
+interface EditPostPageProps {
+  posts: IPost[];
+  fetchPosts: () => void;
+}
+
+const EditPostPage: FC<EditPostPageProps> = (props) => {
   const { id } = useParams<{ id: string }>()
-  const { posts } = props;
+  const { posts, fetchPosts } = props;
   const post = posts.find((o) => o.id === Number(id))
 
   if (!post) return <div>Пост не найден</div>;
@@ -19,6 +24,7 @@ const EditPostPage: FC<MainProps> = (props) => {
 
     try {
       await axios.put(`${import.meta.env.VITE_BASE_URL}/posts/${post.id}`, {...post, content});
+      fetchPosts();
       navigate(-1)
     } catch (error) {
       console.error('Ошибка при редактировании поста:', error);

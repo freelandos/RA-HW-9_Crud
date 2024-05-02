@@ -3,7 +3,12 @@ import { useNavigate } from "react-router-dom";
 import NavTopPost from "../components/NavTopPost";
 import axios from "axios";
 
-const CreatePostPage: FC = () => {
+interface CreatePostPage {
+	fetchPosts: () => void;
+}
+
+const CreatePostPage: FC<CreatePostPage> = (props) => {
+	const { fetchPosts } = props;
 	const [content, setContent] = useState("");
 	const navigate = useNavigate();
 
@@ -12,6 +17,7 @@ const CreatePostPage: FC = () => {
 
 		try {
 			await axios.post(`${import.meta.env.VITE_BASE_URL}/posts`, { content });
+			fetchPosts();
 			navigate("/");
 		} catch (error) {
 			console.error("Ошибка при создании поста:", error);

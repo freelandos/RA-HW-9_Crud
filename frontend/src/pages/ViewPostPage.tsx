@@ -2,12 +2,17 @@ import React from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import ViewPost from "../components/ViewPost";
 import ButtonX from "../components/ButtonX";
-import { MainProps } from "../models";
+import { IPost } from "../models";
 import axios from "axios";
 
-const ViewPostPage: React.FC<MainProps> = (props) => {
+interface EditPostPageProps {
+  posts: IPost[];
+  fetchPosts: () => void;
+}
+
+const ViewPostPage: React.FC<EditPostPageProps> = (props) => {
 	const { id } = useParams<{ id: string }>();
-	const { posts } = props;
+	const { posts, fetchPosts } = props;
 	const post = posts.find((o) => o.id === Number(id));
 
 	if (!post) return <div>Пост не найден</div>;
@@ -18,6 +23,7 @@ const ViewPostPage: React.FC<MainProps> = (props) => {
 	const handleDelete = async () => {
 		try {
 			await axios.delete(`${import.meta.env.VITE_BASE_URL}/posts/${id}`);
+			fetchPosts();
 			navigate("/");
 		} catch (error) {
 			console.error("Ошибка при удалении поста:", error);

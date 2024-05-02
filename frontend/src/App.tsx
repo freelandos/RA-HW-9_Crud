@@ -13,7 +13,7 @@ export default function App() {
 
   useEffect(() => {
     fetchPosts();
-  }, [posts]);
+  }, []);
 
   const fetchPosts = async () => {
     try {
@@ -28,9 +28,9 @@ export default function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<PostsListPage posts={posts} />} />
-        <Route path="/posts/new" element={<CreatePostPage />} />
-        <Route path="/posts/:id" element={<ViewPostPage posts={posts} />} />
-        <Route path="/posts/:id/edit" element={<EditPostPage posts={posts} />} />
+        <Route path="/posts/new" element={<CreatePostPage fetchPosts={fetchPosts} />} />
+        <Route path="/posts/:id" element={<ViewPostPage posts={posts} fetchPosts={fetchPosts} />} />
+        <Route path="/posts/:id/edit" element={<EditPostPage posts={posts} fetchPosts={fetchPosts} />} />
       </Routes>
     </BrowserRouter>
   )

@@ -3,7 +3,3 @@ export interface IPost {
 	content: string;
 	created: number;
 }
-
-export interface MainProps {
-	posts: IPost[];
-}
